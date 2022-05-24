@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 import module as m
 import time
+import csv
 
 # Variables
 COUNTER = 0
@@ -38,7 +39,13 @@ while True:
         # calling landmarks detector funciton.
         image, PointList = m.faceLandmakDetector(frame, grayFrame, face, False)
         # print(PointList)
-
+        # with open('eyepoints.csv', mode='a') as eyeFile:
+        #     # fieldnames = ['LECordinate', 'RECordinate']
+        #     # writer = csv.DictWriter(eyeFile, fieldnames=fieldnames)
+        #     # writer.writerow({'LECordinate':PointList[0],'RECordinate':PointList[1]})
+        #     writer = csv.writer(eyeFile)
+        #     writer.writerow(PointList)
+        
         cv.putText(frame, f'FPS: {round(FPS,1)}',(460, 20), m.font, 0.7, m.YELLOW, 2)
         RightEyePoint = PointList[36:42]
         LeftEyePoint = PointList[42:48]

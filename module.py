@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import dlib
 import math
-
+import csv
 # variables
 font = cv.FONT_HERSHEY_SIMPLEX
 
@@ -39,6 +39,7 @@ def midpoint(pts1, pts2):
     xOut = int((x + x1)/2)
     yOut = int((y1 + y)/2)
     # print(xOut, x, x1)
+    
     return (xOut, yOut)
 
 
@@ -95,6 +96,15 @@ def blinkDetector(eyePoints):
     # finding the mid point of above points
     topMid = midpoint(top[0], top[1])
     bottomMid = midpoint(bottom[0], bottom[1])
+    eye = (math.floor((topMid[0]+bottomMid[0])/2),math.floor((topMid[1]+bottomMid[1])/2))
+    
+    with open('eyepoints.csv', mode='a') as eyeFile:
+            # fieldnames = ['LECordinate', 'RECordinate']
+            # writer = csv.DictWriter(eyeFile, fieldnames=fieldnames)
+            # writer.writerow({'LECordinate':PointList[0],'RECordinate':PointList[1]})
+            writer = csv.writer(eyeFile)
+            writer.writerow(eye)
+    
     # getting the actual width and height eyes using eucaldainDistance function
     VerticalDistance = eucaldainDistance(topMid, bottomMid)
     HorizontalDistance = eucaldainDistance(eyePoints[0], eyePoints[3])
